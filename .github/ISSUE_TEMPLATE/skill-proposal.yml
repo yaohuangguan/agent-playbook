@@ -1,0 +1,18 @@
+name: Skill proposal
+description: Suggest a new skill or a test template for another language.
+labels: [skill-proposal]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What do agents get wrong today? Real examples help most.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: The skill
+      description: When it should be used, and the main steps.
+    validations:
+      required: true

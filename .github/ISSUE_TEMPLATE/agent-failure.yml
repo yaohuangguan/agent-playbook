@@ -1,0 +1,28 @@
+name: Agent failure
+description: An agent made a mistake that a skill should have prevented.
+labels: [agent-failure]
+body:
+  - type: input
+    id: agent
+    attributes:
+      label: Agent and model
+      placeholder: Codex with gpt-5, Gemini CLI, Claude Code with Haiku
+    validations:
+      required: true
+  - type: input
+    id: skill
+    attributes:
+      label: Skill involved
+      placeholder: write-tests
+  - type: textarea
+    id: failure
+    attributes:
+      label: What went wrong
+      description: The task, what the agent did, and what it should have done. Remove secrets and private code.
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested change
+      description: The step or common mistake that would have prevented it.

@@ -1,7 +1,31 @@
 {
   "name": "agent-playbook",
+  "version": "0.1.0",
+  "description": "Step-by-step engineering skills for AI coding agents, including weaker models. Works with Claude Code, Codex and Gemini CLI.",
+  "license": "MIT",
+  "author": "Sam Yao",
   "private": true,
   "type": "module",
+  "bin": {
+    "agent-playbook": "install.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaohuangguan/agent-playbook.git"
+  },
+  "homepage": "https://github.com/yaohuangguan/agent-playbook#readme",
+  "bugs": "https://github.com/yaohuangguan/agent-playbook/issues",
+  "keywords": [
+    "agents-md",
+    "agent-skills",
+    "ai-agents",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "coding-agents",
+    "testing",
+    "best-practices"
+  ],
   "engines": {
     "node": ">=24"
   },

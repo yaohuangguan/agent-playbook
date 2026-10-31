@@ -36,6 +36,7 @@ try {
   assert(exists(fresh, ".agents/" + skill) && exists(fresh, ".claude/" + skill));
   assert(exists(fresh, ".agents/skills/write-tests/examples/go/app_test.go"), "Examples and references travel with the skill");
   assert(exists(fresh, ".claude/skills/write-tests/references/python.md"));
+  for (const skills of [".agents/skills", ".claude/skills"]) assert.match(read(fresh, skills + "/AGENT-PLAYBOOK-LICENSE"), /^MIT License\n\nCopyright \(c\) 2026 /, "The license notice travels with every copy");
 
   // A second run changes nothing, and --check agrees.
   const before = read(fresh, "AGENTS.md");
@@ -96,9 +97,13 @@ try {
   assert(exists(home, ".agents/" + skill) && exists(home, ".claude/" + skill));
   assert.equal(read(home, ".claude/CLAUDE.md"), "# My global notes\n");
   assert(!exists(home, "AGENTS.md") && !exists(home, ".gemini"));
+  assert(exists(home, ".claude/skills/AGENT-PLAYBOOK-LICENSE"));
   assert.equal(global("--check").status, 0);
 
-  assert.match(run().stderr, /usage/);
+  const help = run("--help");
+  assert.equal(help.status, 0);
+  assert.match(help.stdout, /agent-playbook --global/);
+  assert.match(run().stderr, /a project folder or --global is required/);
   assert.match(run("--global", fresh).stderr, /not both/);
   assert.match(run(path.join(base, "missing")).stderr, /not found/);
   console.log("PASS: fresh install, idempotent rerun, drift check, preserved project files, merged settings, refusal without writes and global install");

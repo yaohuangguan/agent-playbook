@@ -31,9 +31,9 @@ are a snapshot. This file is not installed into projects.
 | Evidence-led PRs | PR 443 starts from 7 days of read-only production data |
 | Test the path a user takes | [PR 434](https://github.com/Remote-Arc/remote-arc/pull/434) fixes a scheduling bug found by production acceptance testing through a real connector |
 
-## Review of the Gemini summary
+## Review of an AI-written summary
 
-Gemini's summary was useful, but it turned some single examples into universal
+An AI summary of these tests was useful, but it turned some single examples into universal
 rules. It described recent work well and the whole repository less well.
 
 | Claim | Verdict | What the code shows |
