@@ -9,6 +9,18 @@ Works with Claude Code, Codex, Gemini CLI, and any tool that can read a file. MI
 
 [简体中文](README.zh-CN.md)
 
+## Install with one AI message
+
+Send this to Claude Code, Codex, Gemini CLI, or another coding agent with project-file and terminal access:
+
+```text
+Install these skills in the current project: https://github.com/yaohuangguan/agent-playbook
+```
+
+The agent can read this repository's instructions and run the installer. For use across projects, ask it to install the skills globally instead.
+
+Command-line quick start:
+
 ```bash
 npx github:yaohuangguan/agent-playbook .
 ```

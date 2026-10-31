@@ -9,6 +9,18 @@
 
 [English](README.md)
 
+## 跟 AI 说一句话安装
+
+把下面这句话发给 Claude Code、Codex、Gemini CLI 等能操作项目文件和终端的 AI：
+
+```text
+请把这套 skill 安装到当前项目：https://github.com/yaohuangguan/agent-playbook
+```
+
+AI 可以读取本仓库的说明并执行安装。需要跨项目使用时，把“当前项目”改成“全局”。
+
+终端快速安装：
+
 ```bash
 npx github:yaohuangguan/agent-playbook .
 ```
