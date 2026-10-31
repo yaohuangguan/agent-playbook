@@ -6,6 +6,6 @@
     "node": ">=24"
   },
   "scripts": {
-    "test": "node --no-warnings examples/device-api/app-test.mjs && node examples/device-api/mutations.mjs && node install-test.mjs"
+    "test": "node tests/skills-test.mjs && node tests/install-test.mjs && node tests/mutations.mjs"
   }
 }

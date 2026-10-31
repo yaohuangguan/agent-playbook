@@ -1,7 +1,8 @@
 # Evidence from Remote Arc
 
-These rules come from reading [Remote Arc](https://github.com/Remote-Arc/remote-arc)
-at commit [`116eca7`](https://github.com/Remote-Arc/remote-arc/tree/116eca7802d1419f32901f58232c29d5a1f7f78c),
+The skills generalize practices found by reading
+[Remote Arc](https://github.com/Remote-Arc/remote-arc) at commit
+[`116eca7`](https://github.com/Remote-Arc/remote-arc/tree/116eca7802d1419f32901f58232c29d5a1f7f78c),
 measured on 2026-10-31. Counts are `git grep` results on that commit, so they
 are a snapshot. This file is not installed into projects.
 

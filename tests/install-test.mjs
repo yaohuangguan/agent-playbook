@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const installer = fileURLToPath(new URL("./install.mjs", import.meta.url));
+const installer = fileURLToPath(new URL("../install.mjs", import.meta.url));
 const base = fs.mkdtempSync(path.join(os.tmpdir(), "agent-playbook-install-"));
 const run = (...args) => spawnSync(process.execPath, [installer, ...args], { encoding: "utf8" });
 let count = 0;
@@ -20,18 +20,22 @@ const project = (files = {}) => {
 };
 const read = (directory, name) => fs.readFileSync(path.join(directory, name), "utf8");
 const exists = (directory, name) => fs.existsSync(path.join(directory, name));
+const skill = "skills/write-tests/SKILL.md";
 
 try {
-  // A fresh project gets every file, and guide paths point at the installed copies.
+  // A fresh project gets the rules and skills for every tool, with working paths.
   const fresh = project();
   assert.equal(run(fresh, "--check").status, 1, "A fresh project is out of date");
   assert.equal(fs.readdirSync(fresh).length, 0, "--check writes nothing");
   assert.equal(run(fresh).status, 0);
-  assert.match(read(fresh, "AGENTS.md"), /`\.agent-playbook\/testing\.md`/);
-  assert.doesNotMatch(read(fresh, "AGENTS.md"), /`playbook\//);
+  assert.match(read(fresh, "AGENTS.md"), /`\.agents\/skills\/write-tests\/SKILL\.md`/);
+  assert.doesNotMatch(read(fresh, "AGENTS.md"), /`skills\//);
+  for (const [, file] of read(fresh, "AGENTS.md").matchAll(/`(\.agents\/skills\/[^`]+)`/g)) assert(exists(fresh, file), "The router points at " + file);
   assert.equal(read(fresh, "CLAUDE.md"), "@AGENTS.md\n");
   assert.deepEqual(JSON.parse(read(fresh, ".gemini/settings.json")).context.fileName, ["AGENTS.md", "GEMINI.md"]);
-  assert(exists(fresh, ".agent-playbook/testing.md") && exists(fresh, ".agent-playbook/development.md"));
+  assert(exists(fresh, ".agents/" + skill) && exists(fresh, ".claude/" + skill));
+  assert(exists(fresh, ".agents/skills/write-tests/examples/go/app_test.go"), "Examples and references travel with the skill");
+  assert(exists(fresh, ".claude/skills/write-tests/references/python.md"));
 
   // A second run changes nothing, and --check agrees.
   const before = read(fresh, "AGENTS.md");
@@ -40,10 +44,10 @@ try {
   assert.equal(run(fresh, "--check").status, 0);
 
   // A stale copy is reported, then repaired.
-  fs.appendFileSync(path.join(fresh, ".agent-playbook/testing.md"), "local edit\n");
+  fs.appendFileSync(path.join(fresh, ".claude", skill), "local edit\n");
   const drift = run(fresh, "--check");
   assert.equal(drift.status, 1);
-  assert.match(drift.stderr, /out of date: \.agent-playbook\/testing\.md/);
+  assert.match(drift.stderr, /out of date: \.claude\/skills\/write-tests\/SKILL\.md/);
   assert.equal(run(fresh).status, 0);
   assert.equal(run(fresh, "--check").status, 0);
 
@@ -52,6 +56,7 @@ try {
     "AGENTS.md": "# Project rules\r\n\r\nUse pnpm.\r\n\r\n<!-- agent-playbook:start -->\nold rules\n<!-- agent-playbook:end -->\n\n## After\nKeep me.\n",
     "CLAUDE.md": "# Claude notes\nKeep me too.\n",
     ".gemini/settings.json": JSON.stringify({ theme: "dark", context: { fileName: "CONTEXT.md", loadMemoryFromIncludeDirectories: true } }),
+    ".agents/skills/project-only/SKILL.md": "mine\n",
   });
   assert.equal(run(own).status, 0);
   const agents = read(own, "AGENTS.md");
@@ -64,6 +69,7 @@ try {
   assert.equal(gemini.theme, "dark");
   assert.equal(gemini.context.loadMemoryFromIncludeDirectories, true);
   assert.deepEqual(gemini.context.fileName, ["AGENTS.md", "CONTEXT.md"]);
+  assert.equal(read(own, ".agents/skills/project-only/SKILL.md"), "mine\n", "The project's own skills are kept");
   assert.equal(run(own, "--check").status, 0);
 
   // Instructions with no block get one appended, without touching what is there.
@@ -76,14 +82,26 @@ try {
   const refused = run(invalid);
   assert.equal(refused.status, 1);
   assert.match(refused.stderr, /not plain JSON/);
-  assert(!exists(invalid, "AGENTS.md") && !exists(invalid, "CLAUDE.md"), "Nothing is written after a refusal");
+  assert(!exists(invalid, "AGENTS.md") && !exists(invalid, ".agents"), "Nothing is written after a refusal");
   const damaged = project({ "AGENTS.md": "<!-- agent-playbook:start -->\nno end marker\n" });
   assert.match(run(damaged).stderr, /damaged/);
   assert.equal(read(damaged, "AGENTS.md"), "<!-- agent-playbook:start -->\nno end marker\n");
 
+  // A global install adds skills to the home folder, and never touches its rule files.
+  const home = project({ ".claude/CLAUDE.md": "# My global notes\n" });
+  const homeEnv = { ...process.env, HOME: home, USERPROFILE: home };
+  const global = (...args) => spawnSync(process.execPath, [installer, "--global", ...args], { encoding: "utf8", env: homeEnv });
+  assert.equal(global("--check").status, 1);
+  assert.equal(global().status, 0);
+  assert(exists(home, ".agents/" + skill) && exists(home, ".claude/" + skill));
+  assert.equal(read(home, ".claude/CLAUDE.md"), "# My global notes\n");
+  assert(!exists(home, "AGENTS.md") && !exists(home, ".gemini"));
+  assert.equal(global("--check").status, 0);
+
   assert.match(run().stderr, /usage/);
+  assert.match(run("--global", fresh).stderr, /not both/);
   assert.match(run(path.join(base, "missing")).stderr, /not found/);
-  console.log("PASS: fresh install, idempotent rerun, drift check, preserved project files, merged settings and refusal without writes");
+  console.log("PASS: fresh install, idempotent rerun, drift check, preserved project files, merged settings, refusal without writes and global install");
 } finally {
   fs.rmSync(base, { recursive: true, force: true });
 }

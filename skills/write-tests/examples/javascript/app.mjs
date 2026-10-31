@@ -1,5 +1,5 @@
-// A small API with the risks the testing guide talks about: ownership, input
-// limits, an audit trail, a secret column and a replayable payment webhook.
+// A small API with ownership, input limits, an audit trail, a secret column and a
+// replayable payment webhook.
 const MAX_NAME = 80;
 export const PROVIDER = "https://api.provider.test";
 
