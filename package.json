@@ -1,0 +1,11 @@
+{
+  "name": "agent-playbook",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --no-warnings examples/device-api/app-test.mjs && node examples/device-api/mutations.mjs && node install-test.mjs"
+  }
+}
