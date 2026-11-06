@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- `structure-code`: where new code goes, with limits on file and folder size, interface text in message catalogs, one entry point for permissions and flags, providers for app-wide values, and grouped styles. `references/frontend.md` shows the layout for a UI.
+- `implement-change`, `refactor-safely` and `review-code` now point to it.
+
 ## 0.1.0
 
 First public release.

@@ -43,7 +43,7 @@ for (const name of names) {
     assert(fs.existsSync(path.join(skillsRoot, name, file)), name + " points at a missing file: " + file);
   }
   for (const [, other] of text.matchAll(/`([a-z]+(?:-[a-z]+)+)`/g)) {
-    const looksLikeSkill = /^(orient|implement|debug|write|audit|fix|refactor|change|secure|use|review|verify|hand)-/.test(other);
+    const looksLikeSkill = /^(orient|implement|debug|write|audit|fix|refactor|structure|change|secure|use|review|verify|hand)-/.test(other);
     if (looksLikeSkill) assert(names.includes(other), name + " names a missing skill: " + other);
   }
 

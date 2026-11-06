@@ -37,6 +37,7 @@ Telling an agent to "write good tests" doesn't help much. Agent Playbook gives i
 | [write-tests](skills/write-tests/SKILL.md) | Tests that catch real defects, with JavaScript, Python and Go templates |
 | [audit-test-suite](skills/audit-test-suite/SKILL.md) | Finding weak spots, ranked by risk |
 | [fix-flaky-test](skills/fix-flaky-test/SKILL.md) | Fixing intermittent failures without retries |
+| [structure-code](skills/structure-code/SKILL.md) | Where new code goes: small files, grouped folders, message catalogs, shared hooks |
 | [refactor-safely](skills/refactor-safely/SKILL.md) | Restructuring code, and proving nothing changed |
 | [change-data-safely](skills/change-data-safely/SKILL.md) | Migrations, backfills and bulk data changes |
 | [secure-change](skills/secure-change/SKILL.md) | Login, permissions, input, secrets and payments |
