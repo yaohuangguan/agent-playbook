@@ -16,6 +16,7 @@ and follow its steps in order. If nothing matches, use `implement-change`.
 | Writing or changing tests | `skills/write-tests/SKILL.md` |
 | Finding weak or missing tests | `skills/audit-test-suite/SKILL.md` |
 | A test that sometimes fails | `skills/fix-flaky-test/SKILL.md` |
+| New files or modules, or code grown too large | `skills/structure-code/SKILL.md` |
 | Moving or restructuring code | `skills/refactor-safely/SKILL.md` |
 | Schema, migration, backfill or bulk data change | `skills/change-data-safely/SKILL.md` |
 | Login, permissions, user input, secrets or payments | `skills/secure-change/SKILL.md` |
