@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- `structure-code`: where new code goes, with limits on file and folder size, interface text in message catalogs, one entry point for permissions and flags, providers for app-wide values, and grouped styles. `references/frontend.md` shows the layout for a UI.
+- `structure-code`: engineering structure for any stack, with module boundaries and import direction, limits on file and folder size, domain folders, one source of truth for permissions, config, errors, limits, flags, logging and text, explicit shared context, validated edges and removing replaced code. `references/backend.md` covers services and APIs, and `references/frontend.md` covers user interfaces.
 - `implement-change`, `refactor-safely` and `review-code` now point to it.
 
 ## 0.1.0

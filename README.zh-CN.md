@@ -37,7 +37,7 @@ AI 编程助手的失败方式很固定：没跑过就说修好了、凭记忆�
 | [write-tests](skills/write-tests/SKILL.md) | 写能抓到真实缺陷的测试，附 JavaScript、Python、Go 模板 |
 | [audit-test-suite](skills/audit-test-suite/SKILL.md) | 按风险找出测试的薄弱环节 |
 | [fix-flaky-test](skills/fix-flaky-test/SKILL.md) | 修偶发失败，不靠重试掩盖 |
-| [structure-code](skills/structure-code/SKILL.md) | 新代码放在哪：文件不过大、目录分组、文案进词典、共用逻辑收进 hooks |
+| [structure-code](skills/structure-code/SKILL.md) | 工程结构：模块边界、文件不过大、按领域分目录，权限、配置、错误码和文案各有唯一来源 |
 | [refactor-safely](skills/refactor-safely/SKILL.md) | 重构，并证明行为没变 |
 | [change-data-safely](skills/change-data-safely/SKILL.md) | 迁移、回填和批量改数据 |
 | [secure-change](skills/secure-change/SKILL.md) | 登录、权限、输入、密钥和支付 |
